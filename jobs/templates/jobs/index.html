@@ -7,6 +7,7 @@
     <title>JOB Log Backup Console</title>
     <style>
         :root {
+            --page-bg: url("{% static 'hosts/visuals/bg/sunny_lighthouse.png' %}");
             --bg: #eef3f8;
             --panel: #ffffff;
             --ink: #1d2738;
@@ -29,8 +30,8 @@
             color: var(--ink);
             font: 14px/1.5 Arial, "Microsoft YaHei", sans-serif;
             background:
-                linear-gradient(180deg, rgba(239, 246, 255, 0.78), rgba(243, 246, 249, 0.94)),
-                url("{% static 'hosts/visuals/bg/sunny_lighthouse.png' %}") center / cover fixed no-repeat;
+                linear-gradient(180deg, rgba(239, 246, 255, 0.58), rgba(243, 246, 249, 0.76)),
+                var(--page-bg) center / cover fixed no-repeat;
         }
 
         button,
@@ -65,6 +66,14 @@
             gap: 18px;
             margin-bottom: 16px;
             padding: 14px 18px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .brand {
@@ -104,6 +113,33 @@
         .status.error {
             color: var(--danger);
             font-weight: 700;
+        }
+
+        .segmented {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px;
+            background: rgba(237, 244, 255, 0.9);
+            border: 1px solid rgba(204, 216, 236, 0.95);
+            border-radius: 8px;
+        }
+
+        .segmented button {
+            min-width: 84px;
+            height: 30px;
+            padding: 0 9px;
+            color: #445066;
+            background: transparent;
+            border: 0;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .segmented button.active {
+            color: #17345f;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(37, 52, 82, 0.12);
         }
 
         .grid {
@@ -313,6 +349,67 @@
             overflow-wrap: anywhere;
         }
 
+        .pet-dock {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 168px;
+            z-index: 30;
+            user-select: none;
+            touch-action: none;
+            will-change: transform;
+        }
+
+        .pet-body {
+            display: block;
+            width: 100%;
+            height: 172px;
+            object-fit: contain;
+            object-position: bottom center;
+            cursor: grab;
+            filter: drop-shadow(0 14px 18px rgba(24, 32, 51, 0.22));
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+
+        .pet-body:active {
+            cursor: grabbing;
+        }
+
+        .pet-controls {
+            display: grid;
+            grid-template-columns: 1fr 34px;
+            gap: 6px;
+            align-items: center;
+            margin-top: 4px;
+            padding: 6px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(214, 222, 235, 0.96);
+            border-radius: 8px;
+            box-shadow: 0 8px 18px rgba(32, 44, 72, 0.12);
+            backdrop-filter: blur(8px);
+        }
+
+        .pet-select {
+            width: 100%;
+            height: 30px;
+            padding: 0 6px;
+            color: var(--ink);
+            background: #fff;
+            border: 1px solid #cbd6e4;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .pet-reset {
+            width: 30px;
+            height: 30px;
+            color: #42526a;
+            background: #f5f8fc;
+            border: 1px solid #d9e1ec;
+            border-radius: 6px;
+        }
+
         @media (max-width: 980px) {
             .grid,
             .two-cols {
@@ -322,6 +419,33 @@
             .topbar {
                 align-items: flex-start;
                 flex-direction: column;
+            }
+
+            .topbar-right {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .shell {
+                padding: 14px;
+            }
+
+            .segmented {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .segmented button {
+                min-width: 80px;
+            }
+
+            .pet-dock {
+                width: 138px;
+            }
+
+            .pet-body {
+                height: 144px;
             }
         }
     </style>
@@ -336,7 +460,15 @@
                 <p>BlueKing job plan execution and game host log backup</p>
             </div>
         </div>
-        <div class="status" id="statusText"></div>
+        <div class="topbar-right">
+            <div class="segmented" id="backgroundTools" aria-label="Background">
+                <button class="active" type="button" data-bg="lighthouse">Lighthouse</button>
+                <button type="button" data-bg="feather">Feather sky</button>
+                <button type="button" data-bg="clubroom">Clubroom</button>
+                <button type="button" data-bg="beach">Beach</button>
+            </div>
+            <div class="status" id="statusText"></div>
+        </div>
     </header>
 
     <main class="grid">
@@ -450,6 +582,20 @@
     </main>
 </div>
 
+<aside class="pet-dock" id="petDock" aria-label="Desktop pet">
+    <img class="pet-body" id="petBody" src="{% static 'hosts/visuals/pets/noa.png' %}" alt="Noa" draggable="false">
+    <div class="pet-controls">
+        <select class="pet-select" id="petSelect" aria-label="Pet">
+            <option value="noa">Noa</option>
+            <option value="amane">Amane</option>
+            <option value="kurumi">Kurumi</option>
+            <option value="kaguya">Kaguya</option>
+            <option value="orie">Orie</option>
+        </select>
+        <button class="pet-reset" id="petReset" type="button" title="Reset position">R</button>
+    </div>
+</aside>
+
 <script>
 const endpoints = {
     businesses: "{% url 'jobs:businesses' %}",
@@ -458,6 +604,22 @@ const endpoints = {
     searchFiles: "{% url 'jobs:search_files' %}",
     backupFiles: "{% url 'jobs:backup_files' %}",
     records: "{% url 'jobs:records' %}",
+};
+
+const visualAssets = {
+    backgrounds: {
+        lighthouse: "{% static 'hosts/visuals/bg/sunny_lighthouse.png' %}",
+        feather: "{% static 'hosts/visuals/bg/feather_sky.png' %}",
+        clubroom: "{% static 'hosts/visuals/bg/clubroom.png' %}",
+        beach: "{% static 'hosts/visuals/bg/beach.png' %}",
+    },
+    pets: {
+        noa: "{% static 'hosts/visuals/pets/noa.png' %}",
+        amane: "{% static 'hosts/visuals/pets/amane.png' %}",
+        kurumi: "{% static 'hosts/visuals/pets/kurumi.png' %}",
+        kaguya: "{% static 'hosts/visuals/pets/kaguya.png' %}",
+        orie: "{% static 'hosts/visuals/pets/orie.png' %}",
+    },
 };
 
 const state = {
@@ -569,7 +731,7 @@ function renderHosts() {
             <input type="checkbox" value="${escapeHtml(host.bk_host_id || "")}">
             <span>
                 <strong>${escapeHtml(host.bk_host_name || host.bk_host_innerip || "Unnamed host")}</strong>
-                <span>${escapeHtml(host.bk_host_innerip || "")} · ${escapeHtml(host.operator || "")}</span>
+                <span>${escapeHtml(host.bk_host_innerip || "")} / ${escapeHtml(host.operator || "")}</span>
             </span>
         `;
         box.appendChild(label);
@@ -623,7 +785,7 @@ function renderPlans() {
 function fillPlanSelects() {
     const rows = state.plans.map((plan) => ({
         id: plan.id || plan.job_plan_id,
-        name: `${plan.id || plan.job_plan_id} · ${plan.name || plan.job_plan_name || "Unnamed plan"}`,
+        name: `${plan.id || plan.job_plan_id} / ${plan.name || plan.job_plan_name || "Unnamed plan"}`,
     }));
     fillSelect("searchPlanSelect", rows, "id", "name", "Select search plan");
     fillSelect("backupPlanSelect", rows, "id", "name", "Select backup plan");
@@ -767,6 +929,148 @@ function escapeHtml(value) {
         .replace(/'/g, "&#39;");
 }
 
+function applyBackground(name) {
+    const selected = visualAssets.backgrounds[name] ? name : "lighthouse";
+    document.documentElement.style.setProperty("--page-bg", `url("${visualAssets.backgrounds[selected]}")`);
+    document.querySelectorAll("#backgroundTools button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.bg === selected);
+    });
+    window.localStorage.setItem("jobConsoleBackground", selected);
+}
+
+function initBackgroundTools() {
+    const stored = window.localStorage.getItem("jobConsoleBackground") || "lighthouse";
+    applyBackground(stored);
+    document.getElementById("backgroundTools").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-bg]");
+        if (button) {
+            applyBackground(button.dataset.bg);
+        }
+    });
+}
+
+function initPet() {
+    const dock = document.getElementById("petDock");
+    const body = document.getElementById("petBody");
+    const select = document.getElementById("petSelect");
+    const reset = document.getElementById("petReset");
+    const savedPet = window.localStorage.getItem("jobConsolePet") || "noa";
+    const state = {
+        x: 0,
+        y: 0,
+        velocityY: 0,
+        dragging: false,
+        dragOffsetX: 0,
+        dragOffsetY: 0,
+        lastTime: performance.now(),
+    };
+
+    function size() {
+        return {
+            width: dock.offsetWidth || 168,
+            height: dock.offsetHeight || 220,
+        };
+    }
+
+    function floorY() {
+        return Math.max(12, window.innerHeight - size().height - 18);
+    }
+
+    function clampPosition() {
+        const box = size();
+        state.x = Math.min(Math.max(10, state.x), Math.max(10, window.innerWidth - box.width - 10));
+        state.y = Math.min(Math.max(10, state.y), floorY());
+    }
+
+    function resetPosition() {
+        const box = size();
+        state.x = Math.max(10, window.innerWidth - box.width - 28);
+        state.y = floorY();
+        state.velocityY = 0;
+        render(performance.now());
+    }
+
+    function setPet(name) {
+        const selected = visualAssets.pets[name] ? name : "noa";
+        body.src = visualAssets.pets[selected];
+        body.alt = selected.charAt(0).toUpperCase() + selected.slice(1);
+        select.value = selected;
+        window.localStorage.setItem("jobConsolePet", selected);
+    }
+
+    function render(time) {
+        const bob = state.dragging ? 0 : Math.sin(time / 640) * 4;
+        const sway = state.dragging ? 0 : Math.sin(time / 1200) * 3;
+        dock.style.transform = `translate3d(${state.x + sway}px, ${state.y + bob}px, 0)`;
+    }
+
+    function animate(time) {
+        const delta = Math.min(32, time - state.lastTime);
+        state.lastTime = time;
+        if (!state.dragging) {
+            const floor = floorY();
+            if (state.y < floor || state.velocityY > 0.01) {
+                state.velocityY += 0.0024 * delta;
+                state.y += state.velocityY * delta;
+                if (state.y > floor) {
+                    state.y = floor;
+                    state.velocityY = 0;
+                }
+            }
+            clampPosition();
+        }
+        render(time);
+        window.requestAnimationFrame(animate);
+    }
+
+    body.addEventListener("dragstart", (event) => {
+        event.preventDefault();
+    });
+
+    body.addEventListener("pointerdown", (event) => {
+        if (!event.isPrimary) return;
+        event.preventDefault();
+        state.dragging = true;
+        state.velocityY = 0;
+        state.dragOffsetX = event.clientX - state.x;
+        state.dragOffsetY = event.clientY - state.y;
+        body.setPointerCapture(event.pointerId);
+    });
+
+    body.addEventListener("pointermove", (event) => {
+        if (!state.dragging) return;
+        state.x = event.clientX - state.dragOffsetX;
+        state.y = event.clientY - state.dragOffsetY;
+        clampPosition();
+        render(performance.now());
+    });
+
+    body.addEventListener("pointerup", (event) => {
+        state.dragging = false;
+        state.velocityY = 0;
+        body.releasePointerCapture(event.pointerId);
+    });
+
+    body.addEventListener("pointercancel", () => {
+        state.dragging = false;
+    });
+
+    select.addEventListener("change", () => setPet(select.value));
+    reset.addEventListener("click", resetPosition);
+    document.addEventListener("keydown", (event) => {
+        if (event.key.toLowerCase() === "r" && !event.ctrlKey && !event.altKey && !event.metaKey) {
+            const tagName = document.activeElement ? document.activeElement.tagName : "";
+            if (!["INPUT", "SELECT", "TEXTAREA"].includes(tagName)) {
+                resetPosition();
+            }
+        }
+    });
+    window.addEventListener("resize", resetPosition);
+    setPet(savedPet);
+    window.setTimeout(resetPosition, 50);
+    window.requestAnimationFrame(animate);
+}
+
 document.getElementById("loadHostsBtn").addEventListener("click", loadHosts);
 document.getElementById("reloadPlansBtn").addEventListener("click", loadPlans);
 document.getElementById("searchFilesBtn").addEventListener("click", searchFiles);
@@ -796,6 +1100,8 @@ renderHosts();
 renderPlans();
 renderFileResults([]);
 renderRecords();
+initBackgroundTools();
+initPet();
 loadBusinesses();
 loadRecords();
 </script>

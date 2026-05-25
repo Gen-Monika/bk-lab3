@@ -15,6 +15,7 @@ Started the third BlueKing SaaS course project for JOB-based game host log backu
 - Added `JobExecutionRecord` to keep local execution history and status refresh data.
 - Added a standalone JOB Log Backup Console UI.
 - Avoided hard-coded course sample plan IDs by selecting JOB plans from the page.
+- Migrated selectable visual backgrounds and the draggable desktop pet interaction from the earlier labs.
 
 ## Verification
 
