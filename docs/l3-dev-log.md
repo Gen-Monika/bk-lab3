@@ -21,3 +21,8 @@ Started the third BlueKing SaaS course project for JOB-based game host log backu
 
 - `python manage.py check`: OK
 - `BKPAAS_ENVIRONMENT=test python manage.py test jobs`: OK
+
+## Maintenance Update
+
+- Expanded JOB execution status parsing so terminated, cancelled, stopping, string-based, and unmapped numeric statuses no longer render as `unknown` in Execution Records.
+- Added regression coverage for refreshing a terminated JOB execution record.
