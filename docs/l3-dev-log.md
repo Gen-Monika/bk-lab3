@@ -26,3 +26,7 @@ Started the third BlueKing SaaS course project for JOB-based game host log backu
 
 - Expanded JOB execution status parsing so terminated, cancelled, stopping, string-based, and unmapped numeric statuses no longer render as `unknown` in Execution Records.
 - Added regression coverage for refreshing a terminated JOB execution record.
+- Added automatic refresh for active JOB records on page load, timer ticks, and tab visibility recovery.
+- Added result backfill so successful JOB refreshes pull step logs into File Results and local record summaries.
+- Added local archive controls for File Results and Execution Records; archived items are visually separated with a light amber background and can be restored.
+- Added structured JOB script templates under `docs/job_scripts/`; scripts emit `BK_JOB_RESULT={...}` so SaaS can show file list, count, and total size instead of a plain completion summary.
