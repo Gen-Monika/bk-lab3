@@ -32,4 +32,4 @@ Started the third BlueKing SaaS course project for JOB-based game host log backu
 - Added structured JOB script templates under `docs/job_scripts/`; scripts emit `BK_JOB_RESULT={...}` so SaaS can show file list, count, and total size instead of a plain completion summary.
 - Added a unified structured JOB script that supports both search and backup by detecting whether `backup_path` is provided, which fits a single-script JOB plan.
 - Removed the front-end three-item cap from File Results so all recent search and backup summaries returned by the records API remain visible after page refresh.
-- Added archive-all and selection-mode batch archive controls while preserving single-row archive and restore actions in the default view.
+- Added selection-mode batch archive controls with select-archived, select-unarchived, and invert-selection helpers while preserving single-row archive and restore actions in the default view.
