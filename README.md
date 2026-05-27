@@ -50,3 +50,11 @@ The provided `JOB - front-end code package.zip` and `JOB - back-end code package
 
 The JOB plan IDs are selected in the UI instead of being hard-coded in source code, which avoids leaving course sample IDs in business logic.
 
+## Structured JOB Results
+
+The console supports structured file results when the JOB script prints a line starting with `BK_JOB_RESULT=`. In that mode, `File Results` can show the file list, file count, and total size instead of only a plain execution summary.
+
+Reusable script templates are stored in `docs/job_scripts/`. The unified `search_or_backup_structured.sh` script can handle both search and backup: it runs as search when `backup_path` is empty, and runs as backup when `backup_path` is provided.
+
+If the current BlueKing account cannot create or edit JOB execution plans, keep using the existing platform plan. The SaaS remains compatible with that plan and falls back to showing `Summary` records such as `completed`, while still preserving execution history, status refresh, archive controls, and JOB instance links.
+
