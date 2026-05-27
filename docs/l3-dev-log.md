@@ -30,3 +30,4 @@ Started the third BlueKing SaaS course project for JOB-based game host log backu
 - Added result backfill so successful JOB refreshes pull step logs into File Results and local record summaries.
 - Added local archive controls for File Results and Execution Records; archived items are visually separated with a light amber background and can be restored.
 - Added structured JOB script templates under `docs/job_scripts/`; scripts emit `BK_JOB_RESULT={...}` so SaaS can show file list, count, and total size instead of a plain completion summary.
+- Added a unified structured JOB script that supports both search and backup by detecting whether `backup_path` is provided, which fits a single-script JOB plan.
