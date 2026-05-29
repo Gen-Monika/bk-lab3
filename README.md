@@ -10,6 +10,7 @@ BlueKing Django SaaS course project for JOB-based game host log search and backu
 - Trigger backup plans for selected hosts and record execution history.
 - Refresh JOB instance status and link back to BlueKing JOB.
 - Clear API error reporting without fabricated execution results.
+- Paged Help guide that explains the search request, JOB execution pass, application result display, and archive management workflow.
 
 ## Routes
 
@@ -57,4 +58,6 @@ The console supports structured file results when the JOB script prints a line s
 Reusable script templates are stored in `docs/job_scripts/`. The unified `search_or_backup_structured.sh` script can handle both search and backup: it runs as search when `backup_path` is empty, and runs as backup when `backup_path` is provided.
 
 If the current BlueKing account cannot create or edit JOB execution plans, keep using the existing platform plan. The SaaS remains compatible with that plan and falls back to showing `Summary` records such as `completed`, while still preserving execution history, status refresh, archive controls, and JOB instance links.
+
+The frontend Help guide opens once on first entry and can be reopened from the toolbar. It uses compressed screenshots under `static/jobs/help/` to explain the complete search chain and extended record-management controls.
 

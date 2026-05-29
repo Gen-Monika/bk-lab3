@@ -33,3 +33,11 @@ Started the third BlueKing SaaS course project for JOB-based game host log backu
 - Added a unified structured JOB script that supports both search and backup by detecting whether `backup_path` is provided, which fits a single-script JOB plan.
 - Removed the front-end three-item cap from File Results so all recent search and backup summaries returned by the records API remain visible after page refresh.
 - Added selection-mode batch archive controls with select-archived, select-unarchived, and invert-selection helpers while preserving single-row archive and restore actions in the default view.
+- Added a paged Help guide that explains the full search chain: SaaS request record, JOB platform execution pass, SaaS result display, and archive controls.
+- The guide opens once on first entry through `localStorage` and can be reopened from the toolbar.
+- Added compressed guide screenshots under `static/jobs/help/`.
+
+## Guide Verification
+
+- Django template parse: OK
+- Embedded guide JavaScript syntax check with `node --check`: OK
